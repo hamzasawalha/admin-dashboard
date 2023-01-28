@@ -1,0 +1,53 @@
+<div class="container">
+    <mat-card>
+        <div class="flex-card">
+            <div>
+                <h1>
+                    Categories Table
+                </h1>
+            </div>
+            <div>
+                <mat-card-actions>
+                    <button mat-button class="btn btn-edit" (click)="addCategory()">Add</button>
+                </mat-card-actions>
+            </div>
+        </div>
+
+
+        <mat-card-content>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Arabic Name</th>
+                                <th scope="col">Turkish Name</th>
+                                <th scope="col">Code</th>
+                                <th scope="col">Last Update</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of categories | paginate: { itemsPerPage: 10, currentPage: 1 }">
+                                <td>{{item.id}}</td>
+                                <td>{{getArabicName(item.names)}}</td>
+                                <td>{{getTurkishName(item.names)}}</td>
+                                <td>{{item.code}}</td>
+                                <td>{{item.updatedDate}}</td>
+                                <td>
+                                    <button class="btn btn-edit" (click)="editCategory(item.id)">Edit</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <pagination-controls (pageChange)="pageChanged($event)" class="float-right"></pagination-controls>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
