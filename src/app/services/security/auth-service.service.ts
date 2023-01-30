@@ -10,23 +10,28 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(user: UserDTO) : Observable<UserLoginResponse>{
+  login(user: UserDTO): Observable<UserLoginResponse> {
     let url = environment.serviceUrl + "auth/signin";
-    return this.http.post<UserLoginResponse>(url , user);
+    return this.http.post<UserLoginResponse>(url, user);
   }
 
 
-  setUserToken(token:string){
+  setUserToken(token: string) {
     let userStorage = {
-      token : token
+      token: token
     }
-    localStorage.setItem("user" , JSON.stringify(userStorage));
+    localStorage.setItem("user", JSON.stringify(userStorage));
   }
 
-  getAuthToken(){
+  removeUserToken() {
+    localStorage.removeItem("user");
+  }
+
+
+  getAuthToken() {
     let user = JSON.parse(localStorage.getItem("user"));
-    
+
     return user != null ? user.token : null;
   }
-   
+
 }

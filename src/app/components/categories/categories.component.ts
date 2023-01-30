@@ -1,11 +1,12 @@
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CategoriesViewDTO } from 'src/app/classes/categories';
 import { Result } from 'src/app/classes/response-dto';
 import { LanguageCode } from 'src/app/Enums/enums';
 import { CategoriesService } from 'src/app/services/categories/categories.service';
 import { AddCategoriesDialogComponent } from './add-categories-diaglog/add-categories-dialog/add-categories-dialog.component';
+import { EditCategoriesDiaglogComponent } from './edit-categories-diaglog/edit-categories-diaglog.component';
 
 @Component({
   selector: 'app-categories',
@@ -14,7 +15,8 @@ import { AddCategoriesDialogComponent } from './add-categories-diaglog/add-categ
 })
 export class CategoriesComponent implements OnInit {
   categories: any;
-  constructor(private categoriesService: CategoriesService , public dialog: MatDialog) { }
+  
+  constructor(private categoriesService: CategoriesService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getCategories();
@@ -22,37 +24,45 @@ export class CategoriesComponent implements OnInit {
 
 
   getCategories() {
-   this.categoriesService.getCategories(1 , 10).subscribe((res:Result<CategoriesViewDTO>)=>{
-    this.categories = res.data;
-    console.log(this.categories);
-   });
+    this.categoriesService.getCategories(1, 10).subscribe((res: Result<CategoriesViewDTO>) => {
+      this.categories = res.data;
+    });
   }
 
-  getArabicName(names : any[]){
-    if(names != undefined && names.length > 0)
-       return  names.find(x=>x.language == LanguageCode.Arabic).value;
+  getArabicName(names: any[]) {
+    if (names != undefined && names.length > 0)
+      return names.find(x => x.language == LanguageCode.Arabic).value;
   }
 
 
-  getTurkishName(names : any[]){
-    if(names != undefined && names.length > 0)
-       return  names.find(x=>x.language == LanguageCode.Turkish).value;
+  getTurkishName(names: any[]) {
+    if (names != undefined && names.length > 0)
+      return names.find(x => x.language == LanguageCode.Turkish).value;
   }
 
-  editCategory(categoryId : number){
+  editCategory(categoryId: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = { categoryId };
 
+    this.dialog.open(EditCategoriesDiaglogComponent, dialogConfig)
+      .afterClosed().subscribe(res => {
+        if (res) {
+          this.getCategories();
+        }
+      });
   }
 
-  addCategory(){
-    this.dialog.open(AddCategoriesDialogComponent).afterClosed().subscribe(res=>{
-      if(res){
+
+  addCategory() {
+    this.dialog.open(AddCategoriesDialogComponent).afterClosed().subscribe(res => {
+      if (res) {
         this.getCategories();
-      }        
+      }
     });
 
   }
-  pageChanged(event : any){
-   
+  pageChanged(event: any) {
+
   }
 }
 

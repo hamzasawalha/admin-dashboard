@@ -9,18 +9,19 @@ import { AuthService } from 'src/app/services/security/auth-service.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-   user:UserDTO;
+  user: UserDTO;
 
-  constructor(private authService:AuthService , private router : Router){
-    this.user= new UserDTO();
+  constructor(private authService: AuthService, private router: Router) {
+    this.user = new UserDTO();
   }
 
   ngOnInit(): void {
   }
 
-  login(){
-    this.authService.login(this.user).subscribe((response:UserLoginResponse)=>{
-      if(response.isSuccess){
+  login() {
+    this.authService.removeUserToken();
+    this.authService.login(this.user).subscribe((response: UserLoginResponse) => {
+      if (response.isSuccess) {
         this.authService.setUserToken(response.data);
         this.router.navigate(['/categories'])
       }

@@ -1,0 +1,85 @@
+<h2 mat-dialog-title>Edit Lesson</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group categories-control">
+          <label>Arabic Title</label>
+          <input type="text" class="form-control" name="ArabicTitle" placeholder="Enter Arabic Title"
+            [(ngModel)]="lesson.arabicTitle">
+        </div>
+
+        <div class="form-group categories-control">
+          <label>Turkish Title</label>
+          <input type="text" class="form-control" name="TurkishTitle" placeholder="Enter Turkish Title"
+            [(ngModel)]="lesson.turkishTitle">
+        </div>
+
+        <div class="form-group categories-control">
+          <label>Arabic Description</label>
+          <input type="text" class="form-control" name="ArabicDescription" placeholder="Enter Arabic Description"
+            [(ngModel)]="lesson.arabicDescription">
+        </div>
+
+        <div class="form-group categories-control">
+          <label>Turkish Description</label>
+          <input type="text" class="form-control" name="TurkishDescription" placeholder="Enter Turkish Description"
+            [(ngModel)]="lesson.turkishDescription">
+        </div>
+
+
+        <div class="form-group categories-control">
+          <label>Url</label>
+          <input type=" text" class="form-control" name="Url" [(ngModel)]="lesson.videoUrl">
+        </div>
+
+
+        <div class="form-group categories-control">
+          <label>Level</label>
+          <select id="level" placeholder="Select Level" class="form-control" [(ngModel)]="lesson.level">
+            <option selected>Open this select level</option>
+            <option value="PRE_BEGINNER">Pre-Beginner</option>
+            <option value="BEGINNER">Beginner</option>
+            <option value="INTERMEDIATE">Intermediate</option>
+            <option value="EXPERT">Expert</option>
+          </select>
+        </div>
+
+
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group categories-control">
+          <label>Arabic Image</label>
+          <input type="file" class="form-control" name="arabicImage" (change)="onChooseArabicImage($event)">
+          <img [src]="this.arabicImage" width="200" height="200">
+
+        </div>
+
+        <div class="form-group categories-control">
+          <label>Turkish Image</label>
+          <input type="file" class="form-control" name="TurkishImage" (change)="onChooseTurkishImage($event)">
+          <img [src]="this.turkishImage" width="200" height="200">
+        </div>
+
+        <div class="form-group categories-control">
+          <label>Arabic Poster</label>
+          <input type="file" class="form-control" name="arabicPoster" (change)="onChooseArabicPoster($event)">
+          <img [src]="this.arabicPoster" width="200" height="200">
+        </div>
+
+        <div class="form-group categories-control">
+          <label>Turkish Poster</label>
+          <input type="file" class="form-control" name="TurkishPoster" (change)="onChooseTurkishPoster($event)">
+          <img [src]="this.turkishPoster" width="200" height="200">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="addLesson()">Update</button>
+</mat-dialog-actions>

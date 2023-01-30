@@ -33,6 +33,9 @@ import { ProgressLoaderService } from './services/security/loading-progress/load
 import { LoadingInterceptor } from './services/security/Interceptor';
 import { AuthService } from './services/security/auth-service.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { EditCategoriesDiaglogComponent } from './components/categories/edit-categories-diaglog/edit-categories-diaglog.component';
+import { AddLessonsDiaglogComponent } from './components/lessons/add-lessons-diaglog/add-lessons-diaglog.component';
+import { EditLessonsDiaglogComponent } from './components/lessons/edit-lessons-diaglog/edit-lessons-diaglog.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
     EditorialsComponent,
     LessonsComponent,
     LoadingProgressComponent,
-    AddCategoriesDialogComponent
+    AddCategoriesDialogComponent,
+    EditCategoriesDiaglogComponent,
+    AddLessonsDiaglogComponent,
+    EditLessonsDiaglogComponent
   ],
   imports: [
     BrowserModule,

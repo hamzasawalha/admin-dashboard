@@ -1,0 +1,68 @@
+<h2 mat-dialog-title>Add Lesson</h2>
+<mat-dialog-content class="mat-typography">
+ <div class="container">
+  <div class="row">
+   <div class="col-md-12">
+    <div class="form-group categories-control">
+     <label>Arabic Title</label>
+     <input type="text" class="form-control" name="ArabicTitle" placeholder="Enter Arabic Title"
+      [(ngModel)]="lesson.arabicTitle">
+    </div>
+
+    <div class="form-group categories-control">
+     <label>Turkish Title</label>
+     <input type="text" class="form-control" name="TurkishTitle" placeholder="Enter Turkish Title"
+      [(ngModel)]="lesson.turkishTitle">
+    </div>
+
+    <div class="form-group categories-control">
+     <label>Arabic Description</label>
+     <input type="text" class="form-control" name="ArabicDescription" placeholder="Enter Arabic Description"
+      [(ngModel)]="lesson.arabicDescription">
+    </div>
+
+    <div class="form-group categories-control">
+     <label>Turkish Description</label>
+     <input type="text" class="form-control" name="TurkishDescription" placeholder="Enter Turkish Description"
+      [(ngModel)]="lesson.turkishDescription">
+    </div>
+
+
+    <div class="form-group categories-control">
+     <label>Level</label>
+     <input type=" text" class="form-control" name="ArabicName" placeholder="IN_MORNING, CHILD, KIDS"
+      [(ngModel)]="lesson.level">
+    </div>
+   </div>
+
+   <div class="col-md-12">
+    <div class="form-group categories-control">
+     <label>Arabic Image</label>
+     <input type="file" class="form-control" name="arabicImage" (change)="onChooseArabicImage($event)">
+    </div>
+
+    <div class="form-group categories-control">
+     <label>Turkish Image</label>
+     <input type="file" class="form-control" name="TurkishImage" (change)="onChooseTurkishImage($event)">
+    </div>
+
+
+    <div class="form-group categories-control">
+     <label>Arabic Poster</label>
+     <input type="file" class="form-control" name="arabicPoster" (change)="onChooseArabicPoster($event)">
+    </div>
+
+    <div class="form-group categories-control">
+     <label>Turkish Poster</label>
+     <input type="file" class="form-control" name="TurkishPoster" (change)="onChooseTurkishPoster($event)">
+    </div>
+   </div>
+  </div>
+
+ </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+ <button mat-button mat-dialog-close>Cancel</button>
+ <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="addCategory()">Create</button>
+</mat-dialog-actions>

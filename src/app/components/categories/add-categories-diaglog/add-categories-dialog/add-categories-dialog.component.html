@@ -5,36 +5,39 @@
             <div class="col-md-6">
                 <div class="form-group categories-control">
                     <label>Arabic Name</label>
-                    <input type="text" class="form-control" name="ArabicName" placeholder="Enter Arabic Title" [(ngModel)]="category.arabicName">
+                    <input type="text" class="form-control" name="ArabicName" placeholder="Enter Arabic Title"
+                        [(ngModel)]="category.arabicName">
                 </div>
-        
+
                 <div class="form-group categories-control">
                     <label>Turkish Name</label>
-                    <input type="text" class="form-control" name="TurkishName" placeholder="Enter Turkish Title" [(ngModel)]="category.turkishName">
+                    <input type="text" class="form-control" name="TurkishName" placeholder="Enter Turkish Title"
+                        [(ngModel)]="category.turkishName">
                 </div>
-        
+
                 <div class="form-group categories-control">
                     <label>Code</label>
-                    <input type=" text" class="form-control" name="ArabicName" placeholder="IN_MORNING, CHILD, KIDS" [(ngModel)]="category.code">
+                    <input type=" text" class="form-control" name="ArabicName" placeholder="IN_MORNING, CHILD, KIDS"
+                        [(ngModel)]="category.code">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group categories-control">
                     <label>Arabic Images</label>
-                    <input type="file" class="form-control" name="arabicImage" (change)="onChooseArabicImage($event)" >
+                    <input type="file" class="form-control" name="arabicImage" (change)="onChooseArabicImage($event)">
                     <small>Recommended images size 800x400 (px).</small>
                 </div>
-        
+
                 <div class="form-group categories-control">
                     <label>Turkish Images</label>
-                    <input type="file" class="form-control" name="TurkishImage"  (change)="onChooseTurkishImage($event)"  >
+                    <input type="file" class="form-control" name="TurkishImage" (change)="onChooseTurkishImage($event)">
                     <small>Recommended images size 800x400 (px).</small>
                 </div>
-        
+
             </div>
         </div>
-      
+
     </div>
 
 </mat-dialog-content>

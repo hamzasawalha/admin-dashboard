@@ -4,29 +4,30 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { firstValueFrom } from 'rxjs';
 import { CategoriesDTO } from 'src/app/classes/categories';
+import { LessonsDTO } from 'src/app/classes/lessons';
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriesService {
+export class LessonsService {
   constructor(private http: HttpClient) { }
 
-  getCategories(pageIndex: number, pageSize: number): Observable<any> {
-    let url = environment.serviceUrl + "categories?page_size=" + pageSize + "&page_number=" + pageIndex;
+  getLessons(pageIndex: number, pageSize: number): Observable<any> {
+    let url = environment.serviceUrl + "lessons?page_size=" + pageSize + "&page_number=" + pageIndex;
     return this.http.get<any>(url);
   }
 
-  getCategory(id: string): Observable<any> {
-    let url = environment.serviceUrl + "categories/" + id;
+  getLesson(id: string): Observable<any> {
+    let url = environment.serviceUrl + "lessons/" + id;
     return this.http.get<any>(url);
   }
 
-  uploadCategoryFiles(formData: FormData) {
+  uploadLessonFiles(formData: FormData) {
     let url = environment.serviceUrl + "files";
     return firstValueFrom(this.http.post(url, formData));
   }
 
-  addCategory(category: CategoriesDTO) {
-    let url = environment.serviceUrl + "categories";
+  addLesson(category: LessonsDTO) {
+    let url = environment.serviceUrl + "lessons";
     return firstValueFrom(this.http.post(url, category));
   }
 }
