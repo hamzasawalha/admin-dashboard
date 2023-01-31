@@ -7,41 +7,41 @@
     </h1>
    </div>
    <div>
-    <!-- <mat-card-actions>
-     //<button mat-button mat-raised-button color="primary" (click)="addLesson()">Add</button>
-    </mat-card-actions> -->
+    <mat-card-actions>
+     <button mat-button mat-raised-button color="primary" (click)="addEditorial()">Add</button>
+    </mat-card-actions>
    </div>
   </div>
   <mat-card-content>
    <div class="row">
     <div class="col-12">
-     <!-- <table class="table table-bordered">
+     <table class="table table-bordered">
       <thead>
        <tr>
         <th scope="col">Id</th>
         <th scope="col">Arabic Title</th>
         <th scope="col">Turkish Title</th>
-        <th scope="col">Level</th>
+        <th scope="col">Lessons</th>
         <th scope="col">Last Update</th>
         <th scope="col">Action</th>
        </tr>
       </thead>
       <tbody>
-       <tr *ngFor="let item of lessons | paginate: { itemsPerPage: 10, currentPage: 1 }">
+       <tr *ngFor="let item of editorials | paginate: { itemsPerPage: 10, currentPage: 1 }">
         <td>{{item.id}}</td>
         <td>{{getArabicName(item.titles)}}</td>
         <td>{{getTurkishName(item.titles)}}</td>
-        <td>{{item.level}}</td>
+        <td>{{editorials.length}}</td>
         <td>{{item.updatedDate | date}}</td>
         <td>
-         <button mat-raised-button color="accent" (click)="editLesson(item.id)">Edit</button>
+         <button mat-raised-button color="accent" (click)="editEditorial(item.id)">Edit</button>
         </td>
        </tr>
       </tbody>
       <tfoot>
        <pagination-controls (pageChange)="pageChanged($event)" class="float-right"></pagination-controls>
       </tfoot>
-     </table> -->
+     </table>
     </div>
    </div>
   </mat-card-content>
