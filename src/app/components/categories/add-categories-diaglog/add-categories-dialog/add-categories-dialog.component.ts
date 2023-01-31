@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Categories, CategoriesDTO , Image, Names } from 'src/app/classes/categories';
+import { Categories, CategoriesDTO, Image, Names } from 'src/app/classes/categories';
 import { Result } from 'src/app/classes/response-dto';
-import { LanguageCode } from 'src/app/Enums/enums';
+import { LanguageCode } from 'src/app/enums/enums';
 import { CategoriesService } from 'src/app/services/categories/categories.service';
 import { environment } from 'src/environments/environment';
 @Component({
@@ -11,75 +11,104 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./add-categories-dialog.component.css']
 })
 export class AddCategoriesDialogComponent {
-   category : Categories ;
-   addCategoriesDTO : CategoriesDTO ;
+  category: Categories;
+  categoryDto: CategoriesDTO;
+  arabicImage: any;
+  turkishImage: any;
 
-   constructor(private categoryService:CategoriesService, private dialogRef: MatDialogRef<AddCategoriesDialogComponent>){
+  constructor(private categoryService: CategoriesService, private dialogRef: MatDialogRef<AddCategoriesDialogComponent>) {
     this.category = new Categories();
-    this.addCategoriesDTO = new CategoriesDTO();
-   }
+    this.categoryDto = new CategoriesDTO();
+  }
 
-    
-   onChooseArabicImage(event :any){
-    const target = event.target as HTMLInputElement;
-    const files = target.files as FileList;
-    let formData = new FormData();
-    formData.append("file",files[0]);
-    this.category.arabicImages = formData;
-   }
+  async addArabicImage() {
+    await this.uploadImage(this.category.arabicImages, LanguageCode.Arabic);
+  }
 
-   onChooseTurkishImage(event :any){
-    const target = event.target as HTMLInputElement;
-    const files = target.files as FileList;
-    let formData = new FormData();
-    formData.append("file",files[0]);
-    this.category.turkishImages =  formData;
-   }
+  async addTurkishImage() {
+    await this.uploadImage(this.category.turkishImages, LanguageCode.Turkish);
+  }
 
-   async addCategory(){
+
+  async addCategory() {
     await this.addArabicImage();
     await this.addTurkishImage();
     await this.addCategoryData();
-   }
+  }
 
-  async addArabicImage(){
-    await this.categoryService.uploadCategoryFiles(this.category.arabicImages).then((res : Result<any>)=>{
-      this.category.arabicImages = environment.fileServer + res.data;
-      let arabicImage : Image = new Image();
-      arabicImage.language = LanguageCode.Arabic;
-      arabicImage.value = this.category.arabicImages;
-      this.addCategoriesDTO.images.push(arabicImage);
-    });
-   }
+  onChooseArabicImage(event: any) {
+    const file = this.toFile(event);
+    this.category.arabicImages = this.toFormData(file);
+    const reader = this.readImage(file);
+    reader.onload = () => this.arabicImage = reader.result;
+  }
 
-   async addTurkishImage(){
-    await this.categoryService.uploadCategoryFiles(this.category.turkishImages).then((res : Result<any>)=>{
-      this.category.turkishImages = environment.fileServer + res.data;
-      let turkishImage : Image = new Image();
-      turkishImage.language = LanguageCode.Turkish;
-      turkishImage.value = this.category.turkishImages;
-      this.addCategoriesDTO.images.push(turkishImage);
-    });
-   }
+  onChooseTurkishImage(event: any) {
+    const file = this.toFile(event);
+    this.category.turkishImages = this.toFormData(file);
+    const reader = this.readImage(file);
+    reader.onload = () => this.turkishImage = reader.result;
+  }
 
-   async addCategoryData(){
-    let names : Names[] = 
-    [
-      {
-        language:LanguageCode.Arabic ,
-        value : this.category.arabicName
+
+  async addCategoryData() {
+    let names: Names[] =
+      [{
+        language: LanguageCode.Arabic,
+        value: this.category.arabicName
       },
       {
-        language:LanguageCode.Turkish ,
-        value : this.category.turkishName
+        language: LanguageCode.Turkish,
+        value: this.category.turkishName
       }
-    ]; 
-    this.addCategoriesDTO.code = this.category.code;
+      ];
+    this.categoryDto.code = this.category.code;
+    this.categoryDto.names = names;
 
-    this.addCategoriesDTO.names = names;
-    await this.categoryService.addCategory(this.addCategoriesDTO).then((res : Result<any>)=>{ 
+    await this.categoryService.add(this.categoryDto).then((res: Result<any>) => {
       this.dialogRef.close(true);
     });
-   }
+
+  }
+
+
+  ///////////////////////////////////////////////////////////
+  //////////  Common Images Method //////////////////////////
+  //////////////////////////////////////////////////////////
+
+  private readImage(file: File) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    return reader;
+  }
+
+  private toFormData(file: any) {
+    let formData = new FormData();
+    formData.append("file", file);
+    return formData;
+  }
+
+
+  private toFile(event: any) {
+    const target = event.target as HTMLInputElement;
+    const files = target.files as FileList;
+    return files[0];
+  }
+
+  async uploadImage(image: FormData, language: LanguageCode) {
+    await this.categoryService.upload(image).then((res: Result<any>) => {
+      let url = environment.fileServer + res.data;
+      let uploadedImage: Image = new Image();
+      uploadedImage.language = language;
+      uploadedImage.value = url;
+      this.categoryDto.images.push(uploadedImage);
+    });
+  }
+
+  ///////////////////////////////////////////////////////////
+  ////////// Images ////////////////////////////////////////
+  //////////////////////////////////////////////////////////
 
 }
+
+

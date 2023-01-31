@@ -26,13 +26,14 @@
                 <div class="form-group categories-control">
                     <label>Arabic Images</label>
                     <input type="file" class="form-control" name="arabicImage" (change)="onChooseArabicImage($event)">
-                    <small>Recommended images size 800x400 (px).</small>
+                    <img [src]="this.arabicImage" width="200" height="200" *ngIf="this.arabicImage">
+
                 </div>
 
                 <div class="form-group categories-control">
                     <label>Turkish Images</label>
                     <input type="file" class="form-control" name="TurkishImage" (change)="onChooseTurkishImage($event)">
-                    <small>Recommended images size 800x400 (px).</small>
+                    <img [src]="this.turkishImage" width="200" height="200" *ngIf="this.turkishImage">
                 </div>
 
             </div>

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CategoriesViewDTO } from 'src/app/classes/categories';
 import { Result } from 'src/app/classes/response-dto';
-import { LanguageCode } from 'src/app/Enums/enums';
+import { LanguageCode } from 'src/app/enums/enums';
 import { CategoriesService } from 'src/app/services/categories/categories.service';
 import { AddCategoriesDialogComponent } from './add-categories-diaglog/add-categories-dialog/add-categories-dialog.component';
 import { EditCategoriesDiaglogComponent } from './edit-categories-diaglog/edit-categories-diaglog.component';
@@ -24,7 +24,7 @@ export class CategoriesComponent implements OnInit {
 
 
   getCategories() {
-    this.categoriesService.getCategories(1, 10).subscribe((res: Result<CategoriesViewDTO>) => {
+    this.categoriesService.getAll(1, 10).subscribe((res: Result<CategoriesViewDTO>) => {
       this.categories = res.data;
     });
   }

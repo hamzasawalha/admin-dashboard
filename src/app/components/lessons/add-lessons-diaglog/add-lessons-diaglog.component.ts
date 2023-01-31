@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CategoriesViewDTO } from 'src/app/classes/categories';
 import { Image, Lessons, LessonsDTO, Localization, Subtitle } from 'src/app/classes/lessons';
 import { Result } from 'src/app/classes/response-dto';
-import { LanguageCode } from 'src/app/Enums/enums';
+import { LanguageCode } from 'src/app/enums/enums';
 import { CategoriesService } from 'src/app/services/categories/categories.service';
 import { LessonsService } from 'src/app/services/lessons/lessons.service';
 import { environment } from 'src/environments/environment';
@@ -35,7 +35,7 @@ export class AddLessonsDiaglogComponent {
   }
 
   getCategories() {
-    this.categoriesService.getCategories(1, 10).subscribe((res: Result<CategoriesViewDTO>) => {
+    this.categoriesService.getAll(1, 10).subscribe((res: Result<CategoriesViewDTO>) => {
       this.categories = res.data;
     });
   }

@@ -5,7 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Editorials, EditorialsDTO, Localization, Pagination } from 'src/app/classes/editorials';
 import { LessonsViewDTO } from 'src/app/classes/lessons';
 import { Result } from 'src/app/classes/response-dto';
-import { LanguageCode } from 'src/app/Enums/enums';
+import { LanguageCode } from 'src/app/enums/enums';
 import { EditorialsService } from 'src/app/services/editorials/editorials.service';
 import { LessonsService } from 'src/app/services/lessons/lessons.service';
 

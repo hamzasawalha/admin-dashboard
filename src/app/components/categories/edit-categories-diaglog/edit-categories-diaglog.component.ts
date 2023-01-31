@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Categories, CategoriesDTO, CategoriesViewDTO, Image, Names } from 'src/app/classes/categories';
 import { Result } from 'src/app/classes/response-dto';
-import { LanguageCode } from 'src/app/Enums/enums';
+import { LanguageCode } from 'src/app/enums/enums';
 import { CategoriesService } from 'src/app/services/categories/categories.service';
 import { environment } from 'src/environments/environment';
 
@@ -28,7 +28,7 @@ export class EditCategoriesDiaglogComponent implements OnInit {
   }
 
   getCategory() {
-    this.categoryService.getCategory(this.data.categoryId).subscribe((res: Result<CategoriesDTO>) => {
+    this.categoryService.get(this.data.categoryId).subscribe((res: Result<CategoriesDTO>) => {
       this.editCategoriesDTO = res.data;
       this.category.id = this.editCategoriesDTO.id;
       this.category.code = this.editCategoriesDTO.code;
@@ -81,7 +81,7 @@ export class EditCategoriesDiaglogComponent implements OnInit {
 
   async addArabicImage() {
     if (this.category.arabicImages instanceof FormData) {
-      await this.categoryService.uploadCategoryFiles(this.category.arabicImages).then((res: Result<any>) => {
+      await this.categoryService.upload(this.category.arabicImages).then((res: Result<any>) => {
         this.category.arabicImages = environment.fileServer + res.data;
         let arabicImage: Image = new Image();
         arabicImage.language = LanguageCode.Arabic;
@@ -99,7 +99,7 @@ export class EditCategoriesDiaglogComponent implements OnInit {
 
   async addTurkishImage() {
     if (this.category.turkishImages instanceof FormData) {
-      await this.categoryService.uploadCategoryFiles(this.category.turkishImages).then((res: Result<any>) => {
+      await this.categoryService.upload(this.category.turkishImages).then((res: Result<any>) => {
         this.category.turkishImages = environment.fileServer + res.data;
         let turkishImage: Image = new Image();
         turkishImage.language = LanguageCode.Turkish;
@@ -130,7 +130,7 @@ export class EditCategoriesDiaglogComponent implements OnInit {
     this.editCategoriesDTO.code = this.category.code;
     this.editCategoriesDTO.id = this.category.id;
     this.editCategoriesDTO.names = names;
-    await this.categoryService.addCategory(this.editCategoriesDTO).then((res: Result<any>) => {
+    await this.categoryService.add(this.editCategoriesDTO).then((res: Result<any>) => {
       this.dialogRef.close(true);
     });
   }

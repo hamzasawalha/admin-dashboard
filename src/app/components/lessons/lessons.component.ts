@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LessonsViewDTO, Pagination } from 'src/app/classes/lessons';
 import { Result } from 'src/app/classes/response-dto';
-import { LanguageCode } from 'src/app/Enums/enums';
+import { LanguageCode } from 'src/app/enums/enums';
 import { LessonsService } from 'src/app/services/lessons/lessons.service';
 import { AddLessonsDiaglogComponent } from './add-lessons-diaglog/add-lessons-diaglog.component';
 import { EditLessonsDiaglogComponent } from './edit-lessons-diaglog/edit-lessons-diaglog.component';

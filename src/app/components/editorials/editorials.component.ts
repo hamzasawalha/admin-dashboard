@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditorialsViewDTO } from 'src/app/classes/editorials';
 import { Result } from 'src/app/classes/response-dto';
-import { LanguageCode } from 'src/app/Enums/enums';
+import { LanguageCode } from 'src/app/enums/enums';
 import { EditorialsService } from 'src/app/services/editorials/editorials.service';
 import { AddEditoiralsDiaglogComponent } from './add-editoirals-diaglog/add-editoirals-diaglog.component';
 import { EditEditoiralsDiaglogComponent } from './edit-editoirals-diaglog/edit-editoirals-diaglog.component';
