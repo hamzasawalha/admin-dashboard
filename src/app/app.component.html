@@ -11,31 +11,34 @@
         </button>
     </mat-toolbar>
 
-    <mat-sidenav-container class="app-container">
+    <mat-sidenav-container class="app-container" aria-label="Main navigation">
         <mat-sidenav #sidenav mode="side" [class.mat-elevation-z4]="true">
-            <mat-nav-list>
-                <mat-icon>pages</mat-icon><span>Pages</span>
+            <mat-nav-list aria-label="Side navigation">
+                <h3 class="mat-subheader">Pages</h3>
                 <mat-nav-list>
-                    <a mat-list-item routerLink="/categories">
-                        <mat-icon>reorder</mat-icon><span>Categories</span>
+                    <a mat-list-item routerLink="/categories" aria-label="Categories">
+                        <mat-icon>reorder</mat-icon>
+                        <span>Categories</span>
                     </a>
-                    <a mat-list-item routerLink="/lessons">
-                        <mat-icon>videocam</mat-icon><span>Lessons</span>
+                    <a mat-list-item routerLink="/lessons" aria-label="Lessons">
+                        <mat-icon>videocam</mat-icon>
+                        <span>Lessons</span>
                     </a>
-                    <a mat-list-item routerLink="/editorials">
-                        <mat-icon>work</mat-icon><span>Editorial</span>
+                    <a mat-list-item routerLink="/editorials" aria-label="Editorial">
+                        <mat-icon>work</mat-icon>
+                        <span>Editorial</span>
                     </a>
                 </mat-nav-list>
-
             </mat-nav-list>
         </mat-sidenav>
-        <mat-sidenav-content>
+        <mat-sidenav-content aria-label="Page content">
             <router-outlet>
                 <div class="app-sidenav-content">
                 </div>
             </router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>
+
 </ng-template>
 
 

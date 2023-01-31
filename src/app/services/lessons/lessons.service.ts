@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { firstValueFrom } from 'rxjs';
-import { CategoriesDTO } from 'src/app/classes/categories';
 import { LessonsDTO } from 'src/app/classes/lessons';
 @Injectable({
   providedIn: 'root'
