@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { firstValueFrom } from 'rxjs';
 import { CategoriesDTO } from 'src/app/classes/categories';
+import { EditorialsDTO } from 'src/app/classes/editorials';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +21,7 @@ export class EditorialsService {
     return this.http.get<any>(url);
   }
 
-  addEditorial(category: CategoriesDTO) {
+  addEditorial(category: EditorialsDTO) {
     let url = environment.serviceUrl + "editorials";
     return firstValueFrom(this.http.post(url, category));
   }

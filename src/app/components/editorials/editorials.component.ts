@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditorialsViewDTO } from 'src/app/classes/editorials';
 import { Result } from 'src/app/classes/response-dto';
 import { LanguageCode } from 'src/app/Enums/enums';
 import { EditorialsService } from 'src/app/services/editorials/editorials.service';
+import { AddEditoiralsDiaglogComponent } from './add-editoirals-diaglog/add-editoirals-diaglog.component';
+import { EditEditoiralsDiaglogComponent } from './edit-editoirals-diaglog/edit-editoirals-diaglog.component';
 
 @Component({
   selector: 'app-editorials',
@@ -36,28 +38,28 @@ export class EditorialsComponent {
       return titles.find(x => x.language == LanguageCode.Turkish).value;
   }
 
-  editEditorial(categoryId: number) {
-    // const dialogConfig = new MatDialogConfig();
-    // dialogConfig.data = { categoryId };
-    // dialogConfig.maxWidth = '100vw !important';
-    // dialogConfig.width = '100vw !important';
+  editEditorial(editorialId: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = { editorialId };
+    dialogConfig.maxWidth = '100vw !important';
+    dialogConfig.width = '100vw !important';
 
 
-    // this.dialog.open(EditCategoriesDiaglogComponent, dialogConfig)
-    //   .afterClosed().subscribe(res => {
-    //     if (res) {
-    //       this.getCategories();
-    //     }
-    //   });
+    this.dialog.open(EditEditoiralsDiaglogComponent, dialogConfig)
+      .afterClosed().subscribe(res => {
+        if (res) {
+          this.getEditorials();
+        }
+      });
   }
 
 
   addEditorial() {
-    // this.dialog.open(AddCategoriesDialogComponent).afterClosed().subscribe(res => {
-    //   if (res) {
-    //     this.getCategories();
-    //   }
-    // });
+    this.dialog.open(AddEditoiralsDiaglogComponent).afterClosed().subscribe(res => {
+      if (res) {
+        this.getEditorials();
+      }
+    });
 
   }
   pageChanged(event: any) {

@@ -58,6 +58,7 @@ export class EditLessonsDiaglogComponent {
       this.lesson.turkishPosters = this.getLocalization(this.editLessonsDTO.posterImages, LanguageCode.Turkish);
       this.lesson.arabicPosters = this.getLocalization(this.editLessonsDTO.posterImages, LanguageCode.Arabic);
       this.lesson.category = this.editLessonsDTO.category;
+      this.lesson.language = this.editLessonsDTO.language;
 
       // for render image 
       this.turkishImage = this.lesson.turkishImages;

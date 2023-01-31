@@ -55,6 +55,15 @@
           </select>
         </div>
 
+        <div class="form-group categories-control">
+          <label>Video Language</label>
+          <select id="level" placeholder="Select Level" class="form-control" [(ngModel)]="lesson.language">
+            <option selected>Open this select language</option>
+            <option value="AR">Arabic</option>
+            <option value="TR">Turkish</option>
+          </select>
+        </div>
+
 
       </div>
 
@@ -94,13 +103,13 @@
               <div class='row mb-3'>
                 <div class='col-12 mb-3'>
                   <label class='form-label'>Min</label>
-                  <input id='min' data-toggle='touchspin' data-bts-max='60' [value]="subitile.min" class='form-control'
-                    data-btn-vertical='true' type='text'>
+                  <input id='min' data-toggle='touchspin' data-bts-max='60' [(ngModel)]="subitile.min"
+                    class='form-control' data-btn-vertical='true' type='number'>
                 </div>
                 <div class='col-12 mb-3'>
                   <label class='form-label'>Sec</label>
-                  <input id='sec' class='form-control' data-toggle='touchspin' data-bts-max='60' [value]='subitile.sec'
-                    data-btn-vertical='true' type='text'>
+                  <input id='sec' class='form-control' data-toggle='touchspin' data-bts-max='60'
+                    [(ngModel)]="subitile.sec" data-btn-vertical='true' type='number'>
                 </div>
               </div>
               <div class='row mb-3'>

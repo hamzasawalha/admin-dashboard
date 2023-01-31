@@ -38,6 +38,8 @@ import { AddLessonsDiaglogComponent } from './components/lessons/add-lessons-dia
 import { EditLessonsDiaglogComponent } from './components/lessons/edit-lessons-diaglog/edit-lessons-diaglog.component';
 import { CategoriesService } from './services/categories/categories.service';
 import { LessonsService } from './services/lessons/lessons.service';
+import { AddEditoiralsDiaglogComponent } from './components/editorials/add-editoirals-diaglog/add-editoirals-diaglog.component';
+import { EditEditoiralsDiaglogComponent } from './components/editorials/edit-editoirals-diaglog/edit-editoirals-diaglog.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { LessonsService } from './services/lessons/lessons.service';
     AddCategoriesDialogComponent,
     EditCategoriesDiaglogComponent,
     AddLessonsDiaglogComponent,
-    EditLessonsDiaglogComponent
+    EditLessonsDiaglogComponent,
+    AddEditoiralsDiaglogComponent,
+    EditEditoiralsDiaglogComponent
   ],
   imports: [
     BrowserModule,

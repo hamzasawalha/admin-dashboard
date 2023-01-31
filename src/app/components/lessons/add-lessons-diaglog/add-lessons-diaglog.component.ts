@@ -208,6 +208,12 @@ export class AddLessonsDiaglogComponent {
     this.editLessonsDTO.titles = title;
     this.editLessonsDTO.descriptions = descriptions;
     this.editLessonsDTO.category = this.lesson.category;
+    this.editLessonsDTO.subtitles = this.lesson.subtitles;
+    this.editLessonsDTO.videoUrl = this.lesson.videoUrl;
+    this.editLessonsDTO.language = this.lesson.language;
+    
+    console.log(this.editLessonsDTO);
+    
     await this.lessonService.addLesson(this.editLessonsDTO).then((res: Result<any>) => {
       this.dialogRef.close(true);
     });
