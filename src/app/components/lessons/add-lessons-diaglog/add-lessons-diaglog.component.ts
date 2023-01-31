@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { Image, Lessons, LessonsDTO, Localization } from 'src/app/classes/lessons';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CategoriesViewDTO } from 'src/app/classes/categories';
+import { Image, Lessons, LessonsDTO, Localization, Subtitle } from 'src/app/classes/lessons';
 import { Result } from 'src/app/classes/response-dto';
 import { LanguageCode } from 'src/app/Enums/enums';
+import { CategoriesService } from 'src/app/services/categories/categories.service';
 import { LessonsService } from 'src/app/services/lessons/lessons.service';
 import { environment } from 'src/environments/environment';
 
@@ -12,12 +14,30 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./add-lessons-diaglog.component.css']
 })
 export class AddLessonsDiaglogComponent {
-  lesson: Lessons;
-  addLessonsDTO: LessonsDTO;
 
-  constructor(private lessonsService: LessonsService, private dialogRef: MatDialogRef<AddLessonsDiaglogComponent>) {
+  lesson: Lessons;
+  editLessonsDTO: LessonsDTO;
+  arabicImage: any;
+  turkishImage: any;
+  arabicPoster: any;
+  turkishPoster: any;
+  categories: any;
+
+  constructor(private categoriesService: CategoriesService, private lessonService: LessonsService, private dialogRef: MatDialogRef<AddLessonsDiaglogComponent>
+    , @Inject(MAT_DIALOG_DATA) public data: any) {
     this.lesson = new Lessons();
-    this.addLessonsDTO = new LessonsDTO();
+    this.editLessonsDTO = new LessonsDTO();
+  }
+
+
+  ngOnInit(): void {
+    this.getCategories();
+  }
+
+  getCategories() {
+    this.categoriesService.getCategories(1, 10).subscribe((res: Result<CategoriesViewDTO>) => {
+      this.categories = res.data;
+    });
   }
 
 
@@ -27,7 +47,13 @@ export class AddLessonsDiaglogComponent {
     let formData = new FormData();
     formData.append("file", files[0]);
     this.lesson.arabicImages = formData;
+    const reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = () => {
+      this.arabicImage = reader.result;
+    };
   }
+
 
   onChooseTurkishImage(event: any) {
     const target = event.target as HTMLInputElement;
@@ -35,7 +61,13 @@ export class AddLessonsDiaglogComponent {
     let formData = new FormData();
     formData.append("file", files[0]);
     this.lesson.turkishImages = formData;
+    const reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = () => {
+      this.turkishImage = reader.result;
+    };
   }
+
 
 
   onChooseArabicPoster(event: any) {
@@ -44,7 +76,13 @@ export class AddLessonsDiaglogComponent {
     let formData = new FormData();
     formData.append("file", files[0]);
     this.lesson.arabicPosters = formData;
+    const reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = () => {
+      this.arabicPoster = reader.result;
+    };
   }
+
 
   onChooseTurkishPoster(event: any) {
     const target = event.target as HTMLInputElement;
@@ -52,36 +90,96 @@ export class AddLessonsDiaglogComponent {
     let formData = new FormData();
     formData.append("file", files[0]);
     this.lesson.turkishPosters = formData;
+    const reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = () => {
+      this.turkishPoster = reader.result;
+    };
   }
 
-  async addCategory() {
+  async addLesson() {
     await this.addArabicImage();
     await this.addTurkishImage();
-    await this.addCategoryData();
-  }
+    await this.addArabicPoster();
+    await this.addTurkishPoster();
+    await this.addlessonData();
+  } 
 
   async addArabicImage() {
-    await this.lessonsService.uploadLessonFiles(this.lesson.arabicImages).then((res: Result<any>) => {
-      this.lesson.arabicImages = environment.fileServer + res.data;
-      let arabicImage: Image = new Image();
-      arabicImage.language = LanguageCode.Arabic;
-      arabicImage.value = this.lesson.arabicImages;
-      this.addLessonsDTO.images.push(arabicImage);
-    });
+    if (this.lesson.arabicImages instanceof FormData) {
+      await this.lessonService.uploadLessonFiles(this.lesson.arabicImages).then((res: Result<any>) => {
+        this.lesson.arabicImages = environment.fileServer + res.data;
+        let arabicImage: Image = new Image();
+        arabicImage.language = LanguageCode.Arabic;
+        arabicImage.value = this.lesson.arabicImages;
+        const existingIndex = this.editLessonsDTO.images.findIndex(img => img.language === LanguageCode.Arabic);
+        if (existingIndex !== -1) {
+          this.editLessonsDTO.images[existingIndex] = arabicImage;
+        } else {
+          this.editLessonsDTO.images.push(arabicImage);
+        }
+      });
+    }
   }
+
 
   async addTurkishImage() {
-    await this.lessonsService.uploadLessonFiles(this.lesson.turkishImages).then((res: Result<any>) => {
-      this.lesson.turkishImages = environment.fileServer + res.data;
-      let turkishImage: Image = new Image();
-      turkishImage.language = LanguageCode.Turkish;
-      turkishImage.value = this.lesson.turkishImages;
-      this.addLessonsDTO.images.push(turkishImage);
-    });
+    if (this.lesson.turkishImages instanceof FormData) {
+      await this.lessonService.uploadLessonFiles(this.lesson.turkishImages).then((res: Result<any>) => {
+        this.lesson.turkishImages = environment.fileServer + res.data;
+        let turkishImage: Image = new Image();
+        turkishImage.language = LanguageCode.Turkish;
+        turkishImage.value = this.lesson.turkishImages;
+        const existingIndex = this.editLessonsDTO.images.findIndex(img => img.language === LanguageCode.Turkish);
+        if (existingIndex !== -1) {
+          this.editLessonsDTO.images[existingIndex] = turkishImage;
+        } else {
+          this.editLessonsDTO.images.push(turkishImage);
+        }
+      });
+    }
   }
 
-  async addCategoryData() {
-    let titles: Localization[] =
+  async addArabicPoster() {
+    if (this.lesson.arabicPosters instanceof FormData) {
+      await this.lessonService.uploadLessonFiles(this.lesson.arabicPosters).then((res: Result<any>) => {
+        this.lesson.arabicPosters = environment.fileServer + res.data;
+        let arabicImage: Image = new Image();
+        arabicImage.language = LanguageCode.Arabic;
+        arabicImage.value = this.lesson.arabicPosters;
+        const existingIndex = this.editLessonsDTO.posterImages.findIndex(img => img.language === LanguageCode.Arabic);
+        if (existingIndex !== -1) {
+          this.editLessonsDTO.posterImages[existingIndex] = arabicImage;
+        } else {
+          this.editLessonsDTO.posterImages.push(arabicImage);
+        }
+      });
+    }
+  }
+
+
+  async addTurkishPoster() {
+    if (this.lesson.turkishPosters instanceof FormData) {
+      await this.lessonService.uploadLessonFiles(this.lesson.turkishPosters).then((res: Result<any>) => {
+        this.lesson.turkishPosters = environment.fileServer + res.data;
+        let turkishImage: Image = new Image();
+        turkishImage.language = LanguageCode.Turkish;
+        turkishImage.value = this.lesson.turkishPosters;
+        const existingIndex = this.editLessonsDTO.posterImages.findIndex(img => img.language === LanguageCode.Turkish);
+        if (existingIndex !== -1) {
+          this.editLessonsDTO.posterImages[existingIndex] = turkishImage;
+        } else {
+          this.editLessonsDTO.posterImages.push(turkishImage);
+        }
+      });
+    }
+  }
+
+
+  async addlessonData() {
+
+
+    let title: Localization[] =
       [
         {
           language: LanguageCode.Arabic,
@@ -92,11 +190,45 @@ export class AddLessonsDiaglogComponent {
           value: this.lesson.turkishTitle
         }
       ];
-    this.addLessonsDTO.level = this.lesson.level;
 
-    this.addLessonsDTO.titles = titles;
-    await this.lessonsService.addLesson(this.addLessonsDTO).then((res: Result<any>) => {
+
+    let descriptions: Localization[] =
+      [
+        {
+          language: LanguageCode.Arabic,
+          value: this.lesson.arabicDescription
+        },
+        {
+          language: LanguageCode.Turkish,
+          value: this.lesson.turkishDescription
+        }
+      ];
+
+    this.editLessonsDTO.level = this.lesson.level;
+    this.editLessonsDTO.titles = title;
+    this.editLessonsDTO.descriptions = descriptions;
+    this.editLessonsDTO.category = this.lesson.category;
+    await this.lessonService.addLesson(this.editLessonsDTO).then((res: Result<any>) => {
       this.dialogRef.close(true);
     });
+  }
+
+
+
+  getLocalization(values: any[], lang: LanguageCode) {
+    if (values != undefined && values.length > 0)
+      return values.find(x => x.language == lang).value;
+  }
+
+  onDeleteSubtitle(index: number) {
+    this.lesson.subtitles.splice(index, 1);
+  }
+
+
+  onAdd() {
+    var subtitle = new Subtitle();
+    subtitle.translations.push(new Localization(LanguageCode.Arabic))
+    subtitle.translations.push(new Localization(LanguageCode.Turkish))
+    this.lesson.subtitles.push(subtitle);
   }
 }

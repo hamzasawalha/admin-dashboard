@@ -27,7 +27,7 @@
             [(ngModel)]="lesson.turkishDescription">
         </div>
 
-        
+
 
         <div class="form-group categories-control">
           <label>Url</label>
@@ -43,6 +43,15 @@
             <option value="BEGINNER">Beginner</option>
             <option value="INTERMEDIATE">Intermediate</option>
             <option value="EXPERT">Expert</option>
+          </select>
+        </div>
+
+        <div class="form-group categories-control">
+          <label>Category</label>
+          <select id="level" placeholder="Select Level" class="form-control" [(ngModel)]="lesson.category">
+            <option selected>Open this select category</option>
+            <option *ngFor="let category of categories" [value]="category.id">
+              {{category.names[0].value}}/{{category.names[1].value}}</option>
           </select>
         </div>
 
@@ -74,6 +83,40 @@
           <input type="file" class="form-control" name="TurkishPoster" (change)="onChooseTurkishPoster($event)">
           <img [src]="this.turkishPoster" width="200" height="200">
         </div>
+
+        <div class="form-group categories-control subitile" *ngFor="let subitile of lesson.subtitles;index as i">
+          <button (click)="onDeleteSubtitle(i)">Delete</button>
+          <div class='col-lg-12'>
+            <div class='col-lg-12'>
+              <div class='row mb-3'>
+                <div class='col-12 mb-3'>
+                  <label class='form-label'>Min</label>
+                  <input id='min' data-toggle='touchspin' data-bts-max='60' [value]="subitile.min" class='form-control'
+                    data-btn-vertical='true' type='text'>
+                </div>
+                <div class='col-12 mb-3'>
+                  <label class='form-label'>Sec</label>
+                  <input id='sec' class='form-control' data-toggle='touchspin' data-bts-max='60' [value]='subitile.sec'
+                    data-btn-vertical='true' type='text'>
+                </div>
+              </div>
+              <div class='row mb-3'>
+                <div class='col-6 mb-6'>
+                  <label class='form-label'>Arabic translations</label>
+                  <textarea class='form-control' maxlength='225' rows='3'
+                    [(ngModel)]="subitile.translations[0].value">  [(ngModel)]="subitile.translations[0].value"</textarea>
+                </div>
+                <div class='col-6 mb-6'>
+                  <label class='form-label'>Turkish translations</label>
+                  <textarea class='form-control' maxlength='225' rows='3'
+                    [(ngModel)]="subitile.translations[1].value">  [(ngModel)]="subitile.translations[1].value"</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button (click)="onAdd()"> Add</button>
+
       </div>
     </div>
 

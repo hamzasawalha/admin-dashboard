@@ -1,68 +1,129 @@
 <h2 mat-dialog-title>Add Lesson</h2>
 <mat-dialog-content class="mat-typography">
- <div class="container">
-  <div class="row">
-   <div class="col-md-12">
-    <div class="form-group categories-control">
-     <label>Arabic Title</label>
-     <input type="text" class="form-control" name="ArabicTitle" placeholder="Enter Arabic Title"
-      [(ngModel)]="lesson.arabicTitle">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group categories-control">
+          <label>Arabic Title</label>
+          <input type="text" class="form-control" name="ArabicTitle" placeholder="Enter Arabic Title"
+            [(ngModel)]="lesson.arabicTitle">
+        </div>
+
+        <div class="form-group categories-control">
+          <label>Turkish Title</label>
+          <input type="text" class="form-control" name="TurkishTitle" placeholder="Enter Turkish Title"
+            [(ngModel)]="lesson.turkishTitle">
+        </div>
+
+        <div class="form-group categories-control">
+          <label>Arabic Description</label>
+          <input type="text" class="form-control" name="ArabicDescription" placeholder="Enter Arabic Description"
+            [(ngModel)]="lesson.arabicDescription">
+        </div>
+
+        <div class="form-group categories-control">
+          <label>Turkish Description</label>
+          <input type="text" class="form-control" name="TurkishDescription" placeholder="Enter Turkish Description"
+            [(ngModel)]="lesson.turkishDescription">
+        </div>
+
+
+
+        <div class="form-group categories-control">
+          <label>Url</label>
+          <input type=" text" class="form-control" name="Url" [(ngModel)]="lesson.videoUrl">
+        </div>
+
+
+        <div class="form-group categories-control">
+          <label>Level</label>
+          <select id="level" placeholder="Select Level" class="form-control" [(ngModel)]="lesson.level">
+            <option selected>Open this select level</option>
+            <option value="PRE_BEGINNER">Pre-Beginner</option>
+            <option value="BEGINNER">Beginner</option>
+            <option value="INTERMEDIATE">Intermediate</option>
+            <option value="EXPERT">Expert</option>
+          </select>
+        </div>
+
+        <div class="form-group categories-control">
+          <label>Category</label>
+          <select id="level" placeholder="Select Level" class="form-control" [(ngModel)]="lesson.category">
+            <option selected>Open this select category</option>
+            <option *ngFor="let category of categories" [value]="category.id">
+              {{category.names[0].value}}/{{category.names[1].value}}</option>
+          </select>
+        </div>
+
+
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group categories-control">
+          <label>Arabic Image</label>
+          <input type="file" class="form-control" name="arabicImage" (change)="onChooseArabicImage($event)">
+          <img [src]="this.arabicImage" width="200" height="200">
+
+        </div>
+
+        <div class="form-group categories-control">
+          <label>Turkish Image</label>
+          <input type="file" class="form-control" name="TurkishImage" (change)="onChooseTurkishImage($event)">
+          <img [src]="this.turkishImage" width="200" height="200">
+        </div>
+
+        <div class="form-group categories-control">
+          <label>Arabic Poster</label>
+          <input type="file" class="form-control" name="arabicPoster" (change)="onChooseArabicPoster($event)">
+          <img [src]="this.arabicPoster" width="200" height="200">
+        </div>
+
+        <div class="form-group categories-control">
+          <label>Turkish Poster</label>
+          <input type="file" class="form-control" name="TurkishPoster" (change)="onChooseTurkishPoster($event)">
+          <img [src]="this.turkishPoster" width="200" height="200">
+        </div>
+
+        <div class="form-group categories-control subitile" *ngFor="let subitile of lesson.subtitles;index as i">
+          <button (click)="onDeleteSubtitle(i)">Delete</button>
+          <div class='col-lg-12'>
+            <div class='col-lg-12'>
+              <div class='row mb-3'>
+                <div class='col-12 mb-3'>
+                  <label class='form-label'>Min</label>
+                  <input id='min' data-toggle='touchspin' data-bts-max='60' [value]="subitile.min" class='form-control'
+                    data-btn-vertical='true' type='text'>
+                </div>
+                <div class='col-12 mb-3'>
+                  <label class='form-label'>Sec</label>
+                  <input id='sec' class='form-control' data-toggle='touchspin' data-bts-max='60' [value]='subitile.sec'
+                    data-btn-vertical='true' type='text'>
+                </div>
+              </div>
+              <div class='row mb-3'>
+                <div class='col-6 mb-6'>
+                  <label class='form-label'>Arabic translations</label>
+                  <textarea class='form-control' maxlength='225' rows='3'
+                    [(ngModel)]="subitile.translations[0].value">  [(ngModel)]="subitile.translations[0].value"</textarea>
+                </div>
+                <div class='col-6 mb-6'>
+                  <label class='form-label'>Turkish translations</label>
+                  <textarea class='form-control' maxlength='225' rows='3'
+                    [(ngModel)]="subitile.translations[1].value">  [(ngModel)]="subitile.translations[1].value"</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button (click)="onAdd()"> Add</button>
+
+      </div>
     </div>
 
-    <div class="form-group categories-control">
-     <label>Turkish Title</label>
-     <input type="text" class="form-control" name="TurkishTitle" placeholder="Enter Turkish Title"
-      [(ngModel)]="lesson.turkishTitle">
-    </div>
-
-    <div class="form-group categories-control">
-     <label>Arabic Description</label>
-     <input type="text" class="form-control" name="ArabicDescription" placeholder="Enter Arabic Description"
-      [(ngModel)]="lesson.arabicDescription">
-    </div>
-
-    <div class="form-group categories-control">
-     <label>Turkish Description</label>
-     <input type="text" class="form-control" name="TurkishDescription" placeholder="Enter Turkish Description"
-      [(ngModel)]="lesson.turkishDescription">
-    </div>
-
-
-    <div class="form-group categories-control">
-     <label>Level</label>
-     <input type=" text" class="form-control" name="ArabicName" placeholder="IN_MORNING, CHILD, KIDS"
-      [(ngModel)]="lesson.level">
-    </div>
-   </div>
-
-   <div class="col-md-12">
-    <div class="form-group categories-control">
-     <label>Arabic Image</label>
-     <input type="file" class="form-control" name="arabicImage" (change)="onChooseArabicImage($event)">
-    </div>
-
-    <div class="form-group categories-control">
-     <label>Turkish Image</label>
-     <input type="file" class="form-control" name="TurkishImage" (change)="onChooseTurkishImage($event)">
-    </div>
-
-
-    <div class="form-group categories-control">
-     <label>Arabic Poster</label>
-     <input type="file" class="form-control" name="arabicPoster" (change)="onChooseArabicPoster($event)">
-    </div>
-
-    <div class="form-group categories-control">
-     <label>Turkish Poster</label>
-     <input type="file" class="form-control" name="TurkishPoster" (change)="onChooseTurkishPoster($event)">
-    </div>
-   </div>
   </div>
-
- </div>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
- <button mat-button mat-dialog-close>Cancel</button>
- <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="addCategory()">Create</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="addLesson()">Create</button>
 </mat-dialog-actions>

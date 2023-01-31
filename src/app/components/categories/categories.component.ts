@@ -43,6 +43,9 @@ export class CategoriesComponent implements OnInit {
   editCategory(categoryId: number) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = { categoryId };
+    dialogConfig.maxWidth = '100vw !important';
+    dialogConfig.width = '100vw !important';
+
 
     this.dialog.open(EditCategoriesDiaglogComponent, dialogConfig)
       .afterClosed().subscribe(res => {

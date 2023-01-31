@@ -28,6 +28,12 @@ export class Lessons {
     videoUrl: string;
     language: string;
     level: string;
+    category:string;
+    subtitles: Subtitle[];
+
+    constructor() {
+        this.subtitles = new Array<Subtitle>();
+    }
 }
 
 export class LessonsDTO {
@@ -40,6 +46,7 @@ export class LessonsDTO {
     titles: Localization[];
     descriptions: Localization[];
     subtitles: Subtitle[];
+    category:string;
 
     constructor() {
         this.images = new Array<Image>();
@@ -56,16 +63,22 @@ export class Image {
 }
 
 export class Localization {
-    language: string;
-    value: string;
+    language: string = '';
+    value: string = '';
+
+    constructor(language?: string, value?: string) {
+        this.language = language || '';
+        this.value = value || '';
+    }
 }
 
+
 export class Subtitle {
-    hour: number;
+    hour: number = 0;
 
-    min: number;
+    min: number = 0;
 
-    sec: number;
+    sec: number = 0;
 
-    translations: Localization[];
+    translations: Localization[] = new Array<Localization>();
 }

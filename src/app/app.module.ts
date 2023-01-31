@@ -14,11 +14,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { RouterModule, Routes }   from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatCardModule} from '@angular/material/card';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 //components
 import { AppComponent } from './app.component';
@@ -36,6 +36,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { EditCategoriesDiaglogComponent } from './components/categories/edit-categories-diaglog/edit-categories-diaglog.component';
 import { AddLessonsDiaglogComponent } from './components/lessons/add-lessons-diaglog/add-lessons-diaglog.component';
 import { EditLessonsDiaglogComponent } from './components/lessons/edit-lessons-diaglog/edit-lessons-diaglog.component';
+import { CategoriesService } from './services/categories/categories.service';
+import { LessonsService } from './services/lessons/lessons.service';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,7 @@ import { EditLessonsDiaglogComponent } from './components/lessons/edit-lessons-d
     MatDialogModule,
     NgxPaginationModule
   ],
-  providers: [AuthService ,ProgressLoaderService , {
+  providers: [AuthService, ProgressLoaderService, CategoriesService, LessonsService, {
     provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
   }],
   bootstrap: [AppComponent]

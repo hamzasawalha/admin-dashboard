@@ -1,1 +1,6 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+mat-dialog-container{
+ outline: 0;
+ max-width: none !important;
+ width: 80vw !important;
+}

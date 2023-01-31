@@ -1,8 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Image, Lessons, LessonsDTO, Localization } from 'src/app/classes/lessons';
+import { subscribeOn } from 'rxjs';
+import { Categories, CategoriesViewDTO } from 'src/app/classes/categories';
+import { Image, Lessons, LessonsDTO, Localization, Subtitle } from 'src/app/classes/lessons';
 import { Result } from 'src/app/classes/response-dto';
 import { LanguageCode } from 'src/app/Enums/enums';
+import { CategoriesService } from 'src/app/services/categories/categories.service';
 import { LessonsService } from 'src/app/services/lessons/lessons.service';
 import { environment } from 'src/environments/environment';
 
@@ -12,21 +15,30 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./edit-lessons-diaglog.component.css']
 })
 export class EditLessonsDiaglogComponent {
+
   lesson: Lessons;
   editLessonsDTO: LessonsDTO;
   arabicImage: any;
   turkishImage: any;
   arabicPoster: any;
   turkishPoster: any;
+  categories: any;
 
-  constructor(private lessonService: LessonsService, private dialogRef: MatDialogRef<EditLessonsDiaglogComponent>
+  constructor(private categoriesService: CategoriesService, private lessonService: LessonsService, private dialogRef: MatDialogRef<EditLessonsDiaglogComponent>
     , @Inject(MAT_DIALOG_DATA) public data: any) {
     this.lesson = new Lessons();
   }
 
 
   ngOnInit(): void {
+    this.getCategories();
     this.getlesson();
+  }
+
+  getCategories() {
+    this.categoriesService.getCategories(1, 10).subscribe((res: Result<CategoriesViewDTO>) => {
+      this.categories = res.data;
+    });
   }
 
   getlesson() {
@@ -35,7 +47,7 @@ export class EditLessonsDiaglogComponent {
       this.lesson.id = this.editLessonsDTO.id;
       this.lesson.level = this.editLessonsDTO.level;
       this.lesson.videoUrl = this.editLessonsDTO.videoUrl;
-
+      this.lesson.subtitles = this.editLessonsDTO.subtitles;
       // fill localizations 
       this.lesson.arabicTitle = this.getLocalization(this.editLessonsDTO.titles, LanguageCode.Arabic);
       this.lesson.turkishTitle = this.getLocalization(this.editLessonsDTO.titles, LanguageCode.Turkish);
@@ -45,6 +57,7 @@ export class EditLessonsDiaglogComponent {
       this.lesson.arabicImages = this.getLocalization(this.editLessonsDTO.images, LanguageCode.Arabic);
       this.lesson.turkishPosters = this.getLocalization(this.editLessonsDTO.posterImages, LanguageCode.Turkish);
       this.lesson.arabicPosters = this.getLocalization(this.editLessonsDTO.posterImages, LanguageCode.Arabic);
+      this.lesson.category = this.editLessonsDTO.category;
 
       // for render image 
       this.turkishImage = this.lesson.turkishImages;
@@ -114,6 +127,8 @@ export class EditLessonsDiaglogComponent {
   async addLesson() {
     await this.addArabicImage();
     await this.addTurkishImage();
+    await this.addArabicPoster();
+    await this.addTurkishPoster();
     await this.addlessonData();
   }
 
@@ -152,8 +167,45 @@ export class EditLessonsDiaglogComponent {
     }
   }
 
+  async addArabicPoster() {
+    if (this.lesson.arabicPosters instanceof FormData) {
+      await this.lessonService.uploadLessonFiles(this.lesson.arabicPosters).then((res: Result<any>) => {
+        this.lesson.arabicPosters = environment.fileServer + res.data;
+        let arabicImage: Image = new Image();
+        arabicImage.language = LanguageCode.Arabic;
+        arabicImage.value = this.lesson.arabicPosters;
+        const existingIndex = this.editLessonsDTO.posterImages.findIndex(img => img.language === LanguageCode.Arabic);
+        if (existingIndex !== -1) {
+          this.editLessonsDTO.posterImages[existingIndex] = arabicImage;
+        } else {
+          this.editLessonsDTO.posterImages.push(arabicImage);
+        }
+      });
+    }
+  }
+
+
+  async addTurkishPoster() {
+    if (this.lesson.turkishPosters instanceof FormData) {
+      await this.lessonService.uploadLessonFiles(this.lesson.turkishPosters).then((res: Result<any>) => {
+        this.lesson.turkishPosters = environment.fileServer + res.data;
+        let turkishImage: Image = new Image();
+        turkishImage.language = LanguageCode.Turkish;
+        turkishImage.value = this.lesson.turkishPosters;
+        const existingIndex = this.editLessonsDTO.posterImages.findIndex(img => img.language === LanguageCode.Turkish);
+        if (existingIndex !== -1) {
+          this.editLessonsDTO.posterImages[existingIndex] = turkishImage;
+        } else {
+          this.editLessonsDTO.posterImages.push(turkishImage);
+        }
+      });
+    }
+  }
+
 
   async addlessonData() {
+
+
     let title: Localization[] =
       [
         {
@@ -165,9 +217,25 @@ export class EditLessonsDiaglogComponent {
           value: this.lesson.turkishTitle
         }
       ];
+
+
+    let descriptions: Localization[] =
+      [
+        {
+          language: LanguageCode.Arabic,
+          value: this.lesson.arabicDescription
+        },
+        {
+          language: LanguageCode.Turkish,
+          value: this.lesson.turkishDescription
+        }
+      ];
+
     this.editLessonsDTO.level = this.lesson.level;
     this.editLessonsDTO.id = this.lesson.id;
     this.editLessonsDTO.titles = title;
+    this.editLessonsDTO.descriptions = descriptions;
+    this.editLessonsDTO.category = this.lesson.category;
     await this.lessonService.addLesson(this.editLessonsDTO).then((res: Result<any>) => {
       this.dialogRef.close(true);
     });
@@ -180,4 +248,15 @@ export class EditLessonsDiaglogComponent {
       return values.find(x => x.language == lang).value;
   }
 
+  onDeleteSubtitle(index: number) {
+    this.lesson.subtitles.splice(index, 1);
+  }
+
+
+  onAdd() {
+    var subtitle = new Subtitle();
+    subtitle.translations.push(new Localization(LanguageCode.Arabic))
+    subtitle.translations.push(new Localization(LanguageCode.Turkish))
+    this.lesson.subtitles.push(subtitle);
+  }
 }
