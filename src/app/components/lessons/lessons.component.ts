@@ -23,7 +23,7 @@ export class LessonsComponent implements OnInit {
 
 
   getLessons() {
-    this.lessonsService.getLessons(1, 10).subscribe((res: Result<Pagination>) => {
+    this.lessonsService.getAll(1, 10).subscribe((res: Result<Pagination>) => {
       this.lessons = res.data.content;
     });
   }

@@ -23,7 +23,7 @@ export class EditorialsComponent {
 
 
   getEditorials() {
-    this.editorialsService.getEditorials(1, 10).subscribe((res: Result<EditorialsViewDTO>) => {
+    this.editorialsService.getAll(1, 10).subscribe((res: Result<EditorialsViewDTO>) => {
       this.editorials = res.data;
     });
   }

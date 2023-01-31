@@ -107,7 +107,7 @@ export class AddLessonsDiaglogComponent {
 
   async addArabicImage() {
     if (this.lesson.arabicImages instanceof FormData) {
-      await this.lessonService.uploadLessonFiles(this.lesson.arabicImages).then((res: Result<any>) => {
+      await this.lessonService.upload(this.lesson.arabicImages).then((res: Result<any>) => {
         this.lesson.arabicImages = environment.fileServer + res.data;
         let arabicImage: Image = new Image();
         arabicImage.language = LanguageCode.Arabic;
@@ -125,7 +125,7 @@ export class AddLessonsDiaglogComponent {
 
   async addTurkishImage() {
     if (this.lesson.turkishImages instanceof FormData) {
-      await this.lessonService.uploadLessonFiles(this.lesson.turkishImages).then((res: Result<any>) => {
+      await this.lessonService.upload(this.lesson.turkishImages).then((res: Result<any>) => {
         this.lesson.turkishImages = environment.fileServer + res.data;
         let turkishImage: Image = new Image();
         turkishImage.language = LanguageCode.Turkish;
@@ -142,7 +142,7 @@ export class AddLessonsDiaglogComponent {
 
   async addArabicPoster() {
     if (this.lesson.arabicPosters instanceof FormData) {
-      await this.lessonService.uploadLessonFiles(this.lesson.arabicPosters).then((res: Result<any>) => {
+      await this.lessonService.upload(this.lesson.arabicPosters).then((res: Result<any>) => {
         this.lesson.arabicPosters = environment.fileServer + res.data;
         let arabicImage: Image = new Image();
         arabicImage.language = LanguageCode.Arabic;
@@ -160,7 +160,7 @@ export class AddLessonsDiaglogComponent {
 
   async addTurkishPoster() {
     if (this.lesson.turkishPosters instanceof FormData) {
-      await this.lessonService.uploadLessonFiles(this.lesson.turkishPosters).then((res: Result<any>) => {
+      await this.lessonService.upload(this.lesson.turkishPosters).then((res: Result<any>) => {
         this.lesson.turkishPosters = environment.fileServer + res.data;
         let turkishImage: Image = new Image();
         turkishImage.language = LanguageCode.Turkish;
@@ -214,7 +214,7 @@ export class AddLessonsDiaglogComponent {
     
     console.log(this.editLessonsDTO);
     
-    await this.lessonService.addLesson(this.editLessonsDTO).then((res: Result<any>) => {
+    await this.lessonService.add(this.editLessonsDTO).then((res: Result<any>) => {
       this.dialogRef.close(true);
     });
   }

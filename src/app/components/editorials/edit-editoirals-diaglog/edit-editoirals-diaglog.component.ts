@@ -33,13 +33,13 @@ export class EditEditoiralsDiaglogComponent {
   }
 
   getLessons() {
-    this.lessonService.getLessons(1, 100).subscribe((res: Result<Pagination>) => {
+    this.lessonService.getAll(1, 100).subscribe((res: Result<Pagination>) => {
       this.lessons = res.data.content;
     });
   }
 
   getEditorial() {
-    this.editorialsService.getEditorial(this.data.editorialId).subscribe((res: Result<EditorialsDTO>) => {
+    this.editorialsService.get(this.data.editorialId).subscribe((res: Result<EditorialsDTO>) => {
       console.log(res.data);
       (res.data);
       this.editEditorialsDTO = res.data;
@@ -77,7 +77,7 @@ export class EditEditoiralsDiaglogComponent {
 
 
     this.editEditorialsDTO.lessons = this.editorial.lessons;
-    await this.editorialsService.addEditorial(this.editEditorialsDTO).then((res: Result<any>) => {
+    await this.editorialsService.add(this.editEditorialsDTO).then((res: Result<any>) => {
       this.dialogRef.close(true);
     });
   }
