@@ -2,26 +2,26 @@
 <mat-dialog-content class="mat-typography">
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
-        <div class="form-group categories-control">
+      <div class="col-md-6">
+        <div class="form-group lessons-control">
           <label>Arabic Title</label>
           <input type="text" class="form-control" name="ArabicTitle" placeholder="Enter Arabic Title"
             [(ngModel)]="lesson.arabicTitle">
         </div>
 
-        <div class="form-group categories-control">
+        <div class="form-group lessons-control">
           <label>Turkish Title</label>
           <input type="text" class="form-control" name="TurkishTitle" placeholder="Enter Turkish Title"
             [(ngModel)]="lesson.turkishTitle">
         </div>
 
-        <div class="form-group categories-control">
+        <div class="form-group lessons-control">
           <label>Arabic Description</label>
           <input type="text" class="form-control" name="ArabicDescription" placeholder="Enter Arabic Description"
             [(ngModel)]="lesson.arabicDescription">
         </div>
 
-        <div class="form-group categories-control">
+        <div class="form-group lessons-control">
           <label>Turkish Description</label>
           <input type="text" class="form-control" name="TurkishDescription" placeholder="Enter Turkish Description"
             [(ngModel)]="lesson.turkishDescription">
@@ -29,13 +29,13 @@
 
 
 
-        <div class="form-group categories-control">
+        <div class="form-group lessons-control">
           <label>Url</label>
           <input type=" text" class="form-control" name="Url" [(ngModel)]="lesson.videoUrl">
         </div>
 
 
-        <div class="form-group categories-control">
+        <div class="form-group lessons-control">
           <label>Level</label>
           <select id="level" placeholder="Select Level" class="form-control" [(ngModel)]="lesson.level">
             <option selected>Open this select level</option>
@@ -46,7 +46,7 @@
           </select>
         </div>
 
-        <div class="form-group categories-control">
+        <div class="form-group lessons-control">
           <label>Category</label>
           <select id="level" placeholder="Select Level" class="form-control" [(ngModel)]="lesson.category">
             <option selected>Open this select category</option>
@@ -58,34 +58,37 @@
 
       </div>
 
-      <div class="col-md-12">
-        <div class="form-group categories-control">
+      <div class="col-md-6">
+        <div class="form-group lessons-control">
           <label>Arabic Image</label>
           <input type="file" class="form-control" name="arabicImage" (change)="onChooseArabicImage($event)">
           <img [src]="this.arabicImage" width="200" height="200">
 
         </div>
 
-        <div class="form-group categories-control">
+        <div class="form-group lessons-control">
           <label>Turkish Image</label>
           <input type="file" class="form-control" name="TurkishImage" (change)="onChooseTurkishImage($event)">
           <img [src]="this.turkishImage" width="200" height="200">
         </div>
 
-        <div class="form-group categories-control">
+        <div class="form-group lessons-control">
           <label>Arabic Poster</label>
           <input type="file" class="form-control" name="arabicPoster" (change)="onChooseArabicPoster($event)">
           <img [src]="this.arabicPoster" width="200" height="200">
         </div>
 
-        <div class="form-group categories-control">
+        <div class="form-group lessons-control">
           <label>Turkish Poster</label>
           <input type="file" class="form-control" name="TurkishPoster" (change)="onChooseTurkishPoster($event)">
           <img [src]="this.turkishPoster" width="200" height="200">
         </div>
+      </div>
 
-        <div class="form-group categories-control subitile" *ngFor="let subitile of lesson.subtitles;index as i">
-          <button (click)="onDeleteSubtitle(i)">Delete</button>
+      <div class="col-md-12">
+        <label>Subtitles</label>
+        <div class="form-group lessons-control subitile" *ngFor="let subitile of lesson.subtitles;index as i">
+          <button (click)="onDeleteSubtitle(i)" mat-raised-button="" color="accent">Delete</button>
           <div class='col-lg-12'>
             <div class='col-lg-12'>
               <div class='row mb-3'>
@@ -115,8 +118,7 @@
             </div>
           </div>
         </div>
-        <button (click)="onAdd()"> Add</button>
-
+        <button (click)="onAdd()" mat-raised-button="" color="primary"> Add</button>
       </div>
     </div>
 

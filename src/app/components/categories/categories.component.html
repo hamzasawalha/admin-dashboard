@@ -8,7 +8,7 @@
             </div>
             <div>
                 <mat-card-actions>
-                    <button mat-button class="btn btn-edit" (click)="addCategory()">Add</button>
+                    <button mat-raised-button="" color="primary" (click)="addCategory()">Add</button>
                 </mat-card-actions>
             </div>
         </div>
@@ -38,7 +38,8 @@
                                 <td>{{item.code}}</td>
                                 <td>{{item.updatedDate}}</td>
                                 <td>
-                                    <button class="btn btn-edit" (click)="editCategory(item.id)">Edit</button>
+                                    <button mat-raised-button="" color="accent"
+                                        (click)="editCategory(item.id)">Edit</button>
                                 </td>
                             </tr>
                         </tbody>
