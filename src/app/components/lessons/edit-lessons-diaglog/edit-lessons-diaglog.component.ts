@@ -59,6 +59,8 @@ export class EditLessonsDiaglogComponent {
       this.lesson.arabicPosters = this.getLocalization(this.editLessonsDTO.posterImages, LanguageCode.Arabic);
       this.lesson.category = this.editLessonsDTO.category;
       this.lesson.language = this.editLessonsDTO.language;
+      this.lesson.arabicSubDescription = this.getLocalization(this.editLessonsDTO.subDescriptions, LanguageCode.Arabic);
+      this.lesson.turkishSubDescription = this.getLocalization(this.editLessonsDTO.subDescriptions, LanguageCode.Turkish);
 
       // for render image 
       this.turkishImage = this.lesson.turkishImages;
@@ -232,11 +234,25 @@ export class EditLessonsDiaglogComponent {
         }
       ];
 
+    let subDescriptions: Localization[] =
+      [
+        {
+          language: LanguageCode.Arabic,
+          value: this.lesson.arabicSubDescription
+        },
+        {
+          language: LanguageCode.Turkish,
+          value: this.lesson.turkishSubDescription
+        }
+      ];
     this.editLessonsDTO.level = this.lesson.level;
     this.editLessonsDTO.id = this.lesson.id;
     this.editLessonsDTO.titles = title;
+    this.editLessonsDTO.videoUrl = this.lesson.videoUrl;
     this.editLessonsDTO.descriptions = descriptions;
+    this.editLessonsDTO.language = this.lesson.language;
     this.editLessonsDTO.category = this.lesson.category;
+    this.editLessonsDTO.subDescriptions = subDescriptions;
     await this.lessonService.add(this.editLessonsDTO).then((res: Result<any>) => {
       this.dialogRef.close(true);
     });

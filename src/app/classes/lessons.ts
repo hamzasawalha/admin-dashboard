@@ -21,6 +21,8 @@ export class Lessons {
     turkishTitle: string;
     arabicDescription: string;
     turkishDescription: string;
+    arabicSubDescription: string;
+    turkishSubDescription: string;
     arabicImages: any;
     turkishImages: any;
     arabicPosters: any;
@@ -45,6 +47,7 @@ export class LessonsDTO {
     posterImages: Image[] | undefined;
     titles: Localization[];
     descriptions: Localization[];
+    subDescriptions: Localization[];
     subtitles: Subtitle[];
     category:string;
 
@@ -53,6 +56,7 @@ export class LessonsDTO {
         this.titles = new Array<Localization>();
         this.posterImages = new Array<Image>();
         this.descriptions = new Array<Localization>();
+        this.subDescriptions = new Array<Localization>();
         this.subtitles = new Array<Subtitle>();
     }
 }
