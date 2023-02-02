@@ -36,7 +36,7 @@
                                 <td>{{getArabicName(item.names)}}</td>
                                 <td>{{getTurkishName(item.names)}}</td>
                                 <td>{{item.code}}</td>
-                                <td>{{item.updatedDate}}</td>
+                                <td>{{item.updatedDate | date}}</td>
                                 <td>
                                     <button mat-raised-button="" color="accent"
                                         (click)="editCategory(item.id)">Edit</button>

@@ -103,7 +103,7 @@ export class AddLessonsDiaglogComponent {
     await this.addArabicPoster();
     await this.addTurkishPoster();
     await this.addlessonData();
-  } 
+  }
 
   async addArabicImage() {
     if (this.lesson.arabicImages instanceof FormData) {
@@ -204,16 +204,30 @@ export class AddLessonsDiaglogComponent {
         }
       ];
 
+    let subDescriptions: Localization[] =
+      [
+        {
+          language: LanguageCode.Arabic,
+          value: this.lesson.arabicSubDescription
+        },
+        {
+          language: LanguageCode.Turkish,
+          value: this.lesson.turkishSubDescription
+        }
+      ];
+
     this.editLessonsDTO.level = this.lesson.level;
     this.editLessonsDTO.titles = title;
     this.editLessonsDTO.descriptions = descriptions;
+    this.editLessonsDTO.subDescriptions = subDescriptions;
     this.editLessonsDTO.category = this.lesson.category;
     this.editLessonsDTO.subtitles = this.lesson.subtitles;
     this.editLessonsDTO.videoUrl = this.lesson.videoUrl;
     this.editLessonsDTO.language = this.lesson.language;
-    
-    console.log(this.editLessonsDTO);
-    
+    this.editLessonsDTO.subtitles = this.lesson.subtitles;
+    this.editLessonsDTO.startAt = this.lesson.startAt;
+    this.editLessonsDTO.endAt = this.lesson.endAt;
+
     await this.lessonService.add(this.editLessonsDTO).then((res: Result<any>) => {
       this.dialogRef.close(true);
     });

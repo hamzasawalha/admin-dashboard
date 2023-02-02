@@ -27,10 +27,12 @@ export class Lessons {
     turkishImages: any;
     arabicPosters: any;
     turkishPosters: any;
+    startAt: number;
+    endAt: number;
     videoUrl: string;
     language: string;
     level: string;
-    category:string;
+    category: string;
     subtitles: Subtitle[];
 
     constructor() {
@@ -49,7 +51,9 @@ export class LessonsDTO {
     descriptions: Localization[];
     subDescriptions: Localization[];
     subtitles: Subtitle[];
-    category:string;
+    category: string;
+    startAt: number;
+    endAt: number;
 
     constructor() {
         this.images = new Array<Image>();

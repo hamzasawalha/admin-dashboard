@@ -48,6 +48,9 @@ export class EditLessonsDiaglogComponent {
       this.lesson.level = this.editLessonsDTO.level;
       this.lesson.videoUrl = this.editLessonsDTO.videoUrl;
       this.lesson.subtitles = this.editLessonsDTO.subtitles;
+      this.lesson.startAt = this.editLessonsDTO.startAt;
+      this.lesson.endAt = this.editLessonsDTO.endAt;
+
       // fill localizations 
       this.lesson.arabicTitle = this.getLocalization(this.editLessonsDTO.titles, LanguageCode.Arabic);
       this.lesson.turkishTitle = this.getLocalization(this.editLessonsDTO.titles, LanguageCode.Turkish);
@@ -252,6 +255,8 @@ export class EditLessonsDiaglogComponent {
     this.editLessonsDTO.descriptions = descriptions;
     this.editLessonsDTO.language = this.lesson.language;
     this.editLessonsDTO.category = this.lesson.category;
+    this.editLessonsDTO.startAt = this.lesson.startAt;
+    this.editLessonsDTO.endAt = this.lesson.endAt;
     this.editLessonsDTO.subDescriptions = subDescriptions;
     await this.lessonService.add(this.editLessonsDTO).then((res: Result<any>) => {
       this.dialogRef.close(true);
